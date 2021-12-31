@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { getSignedUrl } from '../../services/storage.service'
   import Icon from 'svelte-awesome'
   import { userCircle as user } from 'svelte-awesome/icons'
+  import { getAccesibleUrl } from '../../stores/avatar.store'
 
   export let url = ''
   export let alt = ''
@@ -12,7 +12,7 @@
 
 <div on:click class="relative">
   {#if url !== ''}
-    {#await getSignedUrl(url)}
+    {#await getAccesibleUrl(url)}
       <div class="img {clazz}" style="width: {scale + 0.1}rem; height: {scale + 0.1}rem">
         <Icon data={user} {scale} />
       </div>

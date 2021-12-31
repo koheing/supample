@@ -10,7 +10,7 @@ export const upload = async (path: string, file: File): Promise<string> => {
 }
 
 export const getSignedUrl = async (path: string) => {
-  const { signedURL, error } = await storage.from(avatars).createSignedUrl(path, 3600)
+  const { signedURL, error } = await storage.from(avatars).createSignedUrl(path, 36000000)
   console.log(error)
 
   return signedURL
