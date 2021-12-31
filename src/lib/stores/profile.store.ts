@@ -5,14 +5,16 @@ import { getSignedUrl, upload } from '../services/storage.service'
 import { v4 } from 'uuid'
 
 interface State {
-  profile: Profile | null
+  mine: Profile | null
+  all: Profile[]
   loading: boolean
   loaded: boolean
   watching: boolean
 }
 
 const init = {
-  profile: null,
+  mine: null,
+  all: [],
   loading: false,
   loaded: false,
   watching: false,
@@ -20,10 +22,10 @@ const init = {
 
 const store = writable<State>(init)
 
-export const profile = derived(store, (state) => state.profile)
+export const profile = derived(store, (state) => state.mine)
 export const loading = derived(store, (state) => state.loading)
 export const loaded = derived(store, (state) => state.loaded)
-export const avatar = derived(store, (state) => state.profile?.avatarUrl ?? '')
+export const avatar = derived(store, (state) => state.mine?.avatarUrl ?? '')
 
 export const create = async (profile: Partial<Profile> & Pick<Profile, 'id'>) => {
   store.update((state) => ({ ...state, loading: true, loaded: false }))
@@ -33,7 +35,7 @@ export const create = async (profile: Partial<Profile> & Pick<Profile, 'id'>) =>
 
   store.update((state) => ({
     ...state,
-    profile: p ?? { username: '', avatarUrl: '', ...profile },
+    mine: p ?? { username: '', avatarUrl: '', ...profile },
     loading: false,
     loaded: true,
   }))
@@ -49,7 +51,7 @@ export const updateUserName = async (name: string) => {
 
   store.update((state) => ({
     ...state,
-    profile: { ...state.profile, ...p },
+    mine: { ...state.mine, ...p },
     loading: false,
     loaded: true,
   }))
@@ -64,8 +66,10 @@ export const updateAvatar = async (id: UserId, file: File) => {
 
   store.update((state) => ({
     ...state,
-    profile: { ...state.profile, avatarUrl },
+    mine: { ...state.mine, avatarUrl },
     loading: false,
     loaded: true,
   }))
 }
+
+export const subscribe = () => {}

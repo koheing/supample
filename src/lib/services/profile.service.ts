@@ -24,12 +24,12 @@ export const selectProfileById = async (id: UserId) => {
   return data[0] ?? null
 }
 
-export const subscribeProfileById = (
-  userId: UserId,
+export const subscribeProfiles = (
   callback: (payload: SupabaseRealtimePayload<Profile>) => void
 ): Unsubscriber => {
   const subscription = supabase
-    .from<Profile>(`${profile}:id=eq.${userId}`)
+    // .from<Profile>(`${profile}:id=eq.${userId}`)
+    .from<Profile>(profile)
     .on('*', callback)
     .subscribe()
 
