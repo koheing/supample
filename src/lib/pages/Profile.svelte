@@ -38,7 +38,7 @@
 </script>
 
 <div class="layout">
-  <Header {avatar} userId={$userId}>Todo List</Header>
+  <Header {avatar} userId={$userId}>Dalack</Header>
 
   <Card>
     <div class="avatar">

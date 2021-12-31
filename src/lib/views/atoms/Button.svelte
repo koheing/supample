@@ -41,9 +41,11 @@
   }
 
   button:disabled {
-    border: 0.1rem solid var(--fg-color);
+    border: 0.4rem solid var(--fg-color);
     color: var(--fg-color);
     background-color: #f0f0f0;
     border: none;
+    padding: 0.5rem;
+    border-radius: 1rem;
   }
 </style>

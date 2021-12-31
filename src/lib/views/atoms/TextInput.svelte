@@ -14,6 +14,7 @@
   export let placeholder = ''
   export let value = ''
   export let validators: Validator[] = []
+  export let showError = true
   const validator = buildValidator(...validators)
 
   let focused = false
@@ -39,7 +40,9 @@
 
 <div class="input">
   <input bind:value on:input={onInput} on:blur={onBlur} {placeholder} />
-  <div class="error">{validated.error}</div>
+  {#if showError}
+    <div class="error">{validated.error}</div>
+  {/if}
 </div>
 
 <style>
