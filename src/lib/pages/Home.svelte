@@ -18,25 +18,27 @@
 <div class="layout">
   <Header {avatar} userId={$userId}>Dalack</Header>
 
-  <div class="comment">
-    <div class="bubble">
-      <div class="mine">
-        トコメントコントコメントコメントコメントコメントコメントコメントコメントコメントコントコメントコメントコメントコメント
+  <div class="comments">
+    <div class="mine comment">
+      <div class="bubble">
+        <div class="text">
+          トコメントコントコメントコメントコメントコメントコメントコメントコメントコメントコントコメントコメントコメントコメント
+        </div>
+      </div>
+      <div class="avatar"><Avatar /></div>
+    </div>
+
+    <div class="others comment">
+      <div class="avatar"><Avatar /></div>
+      <div class="bubble">
+        <div class="text">
+          コメントコメントコメントコメントコントコメントコメントコメントコメント
+        </div>
       </div>
     </div>
-    <div class="avatar"><Avatar /></div>
   </div>
 
-  <div class="comment">
-    <div class="avatar"><Avatar /></div>
-    <div class="bubble">
-      <div class="others">
-        コメントコメントコメントコメントコントコメントコメントコメントコメント
-      </div>
-    </div>
-  </div>
-
-  <div class="form">
+  <div class="footer">
     <div class="text">
       <TextInput showError={false} validators={[required]} on:validate={onValidate} />
     </div>
@@ -53,6 +55,11 @@
     position: relative;
   }
 
+  .comments {
+    overflow-y: scroll;
+    height: calc(100% - 4rem - 5.5rem);
+  }
+
   .comment {
     display: flex;
     flex-direction: row;
@@ -63,15 +70,22 @@
     margin: auto;
   }
 
-  .mine {
+  .mine > .bubble {
+    margin-right: 0;
+  }
+
+  .mine > .avatar {
+    margin-left: 2rem;
+  }
+
+  .mine > .bubble > .text {
     padding: 1rem 2rem;
     position: relative;
     background-color: #f0f0f0f0;
     border-radius: 0.75rem;
-    width: 95%;
   }
 
-  .mine:after {
+  .mine > .bubble > .text:after {
     border: solid transparent;
     content: '';
     height: 0;
@@ -90,15 +104,18 @@
     z-index: 1;
   }
 
-  .others {
+  .others > .bubble {
+    margin-left: 0;
+  }
+
+  .others > .bubble > .text {
     padding: 1rem 2rem;
     position: relative;
     background-color: #f0f0f0f0;
     border-radius: 0.75rem;
-    width: 95%;
   }
 
-  .others:before {
+  .others > .bubble > .text:before {
     border: solid transparent;
     content: '';
     height: 0;
@@ -119,11 +136,13 @@
     z-index: 1;
   }
 
-  .form {
-    -webkit-position: sticky;
-    position: absolute;
-    bottom: 0;
-    z-index: 1;
+  .others > .avatar {
+    margin-right: 2rem;
+  }
+
+  .footer {
+    position: sticky;
+    top: 100vh;
     width: 100%;
     box-shadow: 0.1rem 0.1rem 0.4rem var(--fg-color);
     max-height: 5.5rem;
@@ -132,12 +151,12 @@
     flex-direction: row;
   }
 
-  .text {
-    flex-grow: 8;
+  .footer > .text {
+    flex-grow: 20;
     padding: 0 1rem;
   }
 
-  .button {
+  .footer > .button {
     flex-grow: 1;
     padding: 0 1rem;
   }
