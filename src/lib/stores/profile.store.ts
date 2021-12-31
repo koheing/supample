@@ -1,7 +1,14 @@
 import { derived, writable, get } from 'svelte/store'
+import type { Unsubscriber } from 'svelte/store'
 import type { Profile, UserId } from '../models/profile.model'
-import { createProfile, selectProfileById, updateProfile } from '../services/profile.service'
-import { getSignedUrl, upload } from '../services/storage.service'
+import {
+  createProfile,
+  selectAllProfiles,
+  selectProfileById,
+  subscribeProfiles,
+  updateProfile,
+} from '../services/profile.service'
+import { upload } from '../services/storage.service'
 import { v4 } from 'uuid'
 
 interface State {
@@ -72,4 +79,43 @@ export const updateAvatar = async (id: UserId, file: File) => {
   }))
 }
 
-export const subscribe = () => {}
+let subscription: Unsubscriber | null = null
+
+export const subscribe = async () => {
+  if (subscription) {
+    subscription()
+    subscription = null
+  }
+
+  const profiles = await selectAllProfiles()
+  store.update((state) => ({ ...state, all: profiles }))
+
+  subscription = subscribeProfiles((payload) => {
+    if ((payload.errors?.length ?? 0) > 0) throw payload.errors[0]
+
+    console.log(payload)
+    store.update((state) => {
+      switch (payload.eventType) {
+        case 'UPDATE': {
+          const all = state.all.slice()
+          const newer = payload.new
+          const index = all.findIndex((it) => it.id === newer.id)
+          all.splice(index, 1, newer)
+
+          return { ...state, all }
+        }
+        case 'INSERT': {
+          const newer = payload.new
+          return { ...state, all: [...state.all, newer] }
+        }
+        case 'DELETE': {
+          const all = state.all.slice()
+          const older = payload.old
+          const index = all.findIndex((it) => it.id === older.id)
+          all.splice(index, 1)
+          return { ...state, all }
+        }
+      }
+    })
+  })
+}

@@ -20,8 +20,14 @@ export const deleteProfile = async (user: Partial<Profile> & Pick<Profile, 'id'>
 
 export const selectProfileById = async (id: UserId) => {
   const { data, error } = await supabase.from<Profile>(profile).select().eq('id', id)
-
+  console.log(error)
   return data[0] ?? null
+}
+
+export const selectAllProfiles = async () => {
+  const { data, error } = await supabase.from<Profile>(profile).select()
+  console.log(error)
+  return data ?? []
 }
 
 export const subscribeProfiles = (
