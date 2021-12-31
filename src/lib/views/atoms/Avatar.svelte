@@ -11,7 +11,9 @@
 
 <div on:click class="relative">
   {#if url !== ''}
-    <img src={url} {alt} class="img" style="width: {scale + 0.1}rem; height: {scale + 0.1}rem" />
+    <div class="img" style="width: {scale + 0.1}rem; height: {scale + 0.1}rem">
+      <img src={url} {alt} class="img" style="width: {scale}rem; height: {scale}rem" />
+    </div>
   {:else}
     <div class="img {clazz}" style="width: {scale + 0.1}rem; height: {scale + 0.1}rem">
       <Icon data={user} {scale} />

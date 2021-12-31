@@ -7,6 +7,7 @@
   import Profile from './lib/pages/Profile.svelte'
   import type { Path } from './lib/router'
   import type { SvelteComponent } from 'svelte'
+  import './lib/effects/auth.effect'
 
   const routes: Record<Path, typeof SvelteComponent> = {
     '/': Home,

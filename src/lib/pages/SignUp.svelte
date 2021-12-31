@@ -6,7 +6,7 @@
   import TextInput from '../views/atoms/TextInput.svelte'
   import type { ValidateEvent } from '../views/atoms/TextInput.svelte'
   import { push } from 'svelte-spa-router'
-  import { signUp } from '../stores/auth.store'
+  import { signUp, userId } from '../stores/auth.store'
   import { tick } from 'svelte'
 
   let textInput: TextInput
@@ -16,6 +16,7 @@
   let state = [false, false]
 
   $: canSignUp = state.every((it) => it)
+  $: if ($userId !== '') push('/')
 
   function onEmailValidate(e: ValidateEvent) {
     state[0] = e.detail.valid
@@ -81,15 +82,18 @@
     border-left: 0.15rem solid #f0f0f0;
     border-top: 0.15rem solid #f0f0f0;
   }
+
   .title {
     font-size: 2rem;
   }
+
   .form {
     width: 100%;
     display: flex;
     flex-direction: column;
     margin: 2.5rem 0;
   }
+
   .button {
     width: 80%;
     display: flex;
