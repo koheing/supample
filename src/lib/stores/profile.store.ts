@@ -30,7 +30,6 @@ export const create = async (profile: Partial<Profile> & Pick<Profile, 'id'>) =>
 
   const p = await selectProfileById(profile.id)
   if (!p) await createProfile(profile)
-  if (p.avatarUrl) p.avatarUrl = await getSignedUrl(p.avatarUrl)
 
   store.update((state) => ({
     ...state,
@@ -62,11 +61,10 @@ export const updateAvatar = async (id: UserId, file: File) => {
   const avatarUrl = `${id}/${v4()}.png`
   await upload(avatarUrl, file)
   await updateProfile({ id, avatarUrl })
-  const path = await getSignedUrl(avatarUrl)
 
   store.update((state) => ({
     ...state,
-    profile: { ...state.profile, avatarUrl: path },
+    profile: { ...state.profile, avatarUrl },
     loading: false,
     loaded: true,
   }))

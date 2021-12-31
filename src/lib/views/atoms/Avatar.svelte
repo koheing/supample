@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { getSignedUrl } from '../../services/storage.service'
   import Icon from 'svelte-awesome'
   import { userCircle as user } from 'svelte-awesome/icons'
 
@@ -11,9 +12,19 @@
 
 <div on:click class="relative">
   {#if url !== ''}
-    <div class="img" style="width: {scale + 0.1}rem; height: {scale + 0.1}rem">
-      <img src={url} {alt} class="img" style="width: {scale}rem; height: {scale}rem" />
-    </div>
+    {#await getSignedUrl(url)}
+      <div class="img {clazz}" style="width: {scale + 0.1}rem; height: {scale + 0.1}rem">
+        <Icon data={user} {scale} />
+      </div>
+    {:then avatarUrl}
+      <div class="img" style="width: {scale + 0.1}rem; height: {scale + 0.1}rem">
+        <img src={avatarUrl} {alt} class="img" style="width: {scale}rem; height: {scale}rem" />
+      </div>
+    {:catch}
+      <div class="img {clazz}" style="width: {scale + 0.1}rem; height: {scale + 0.1}rem">
+        <Icon data={user} {scale} />
+      </div>
+    {/await}
   {:else}
     <div class="img {clazz}" style="width: {scale + 0.1}rem; height: {scale + 0.1}rem">
       <Icon data={user} {scale} />
