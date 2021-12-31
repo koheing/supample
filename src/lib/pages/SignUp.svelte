@@ -8,6 +8,7 @@
   import { push } from 'svelte-spa-router'
   import { signUp, userId } from '../stores/auth.store'
   import { tick } from 'svelte'
+  import Card from '../views/atoms/Card.svelte'
 
   let textInput: TextInput
   let passwordInput: PasswordInput
@@ -40,7 +41,7 @@
   }
 </script>
 
-<section>
+<Card>
   <div class="title">Sign up</div>
 
   <div class="form">
@@ -65,24 +66,9 @@
   </div>
 
   <div class="link"><span class="link-text" on:click={moveToSignIn}>サインイン</span>へ</div>
-</section>
+</Card>
 
 <style>
-  section {
-    width: 60%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin: auto;
-    border-radius: 5rem;
-    padding: 4rem;
-    border-bottom: 0.2rem solid #c1c0c0;
-    border-right: 0.2rem solid #c1c0c0;
-    border-left: 0.15rem solid #f0f0f0;
-    border-top: 0.15rem solid #f0f0f0;
-  }
-
   .title {
     font-size: 2rem;
   }

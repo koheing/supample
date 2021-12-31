@@ -22,7 +22,7 @@
 <style>
   .header {
     width: 100%;
-    height: 3rem;
+    height: 4rem;
     background-color: #ec9f62;
     box-shadow: 0 0.1rem 0.4rem #ec9f62;
     display: flex;

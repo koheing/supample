@@ -40,12 +40,20 @@ export const create = async (profile: Partial<Profile> & Pick<Profile, 'id'>) =>
   }))
 }
 
-export const update = async (profile: Partial<Profile> & Pick<Profile, 'id'>) => {
+export const updateUserName = async (name: string) => {
   store.update((state) => ({ ...state, loading: true, loaded: false }))
 
-  await updateProfile(profile)
+  const p = { ...get(profile), username: name } as Profile
+  delete p.avatarUrl
 
-  store.update((state) => ({ ...state, loading: false, loaded: true }))
+  await updateProfile(p)
+
+  store.update((state) => ({
+    ...state,
+    profile: { ...state.profile, ...p },
+    loading: false,
+    loaded: true,
+  }))
 }
 
 export const updateAvatar = async (id: UserId, file: File) => {

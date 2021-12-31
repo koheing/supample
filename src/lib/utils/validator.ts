@@ -2,6 +2,10 @@ export type Validator = (value?: string) => boolean | string
 export type Validated = { valid: boolean; error: string }
 
 export const required: Validator = (value) => (!!value && value !== '') || '必須入力です'
+export const minLength =
+  (min: number): Validator =>
+  (value) =>
+    (!!value && value.length > min) || `${min + 1} 文字以上入力してください`
 
 export const buildValidator =
   (...validators: Validator[]) =>

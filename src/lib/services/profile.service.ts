@@ -10,7 +10,8 @@ export const createProfile = async (user: Partial<Profile> & Pick<Profile, 'id'>
 }
 
 export const updateProfile = async (user: Partial<Profile> & Pick<Profile, 'id'>) => {
-  await supabase.from<Profile>(profile).update(user).match({ id: user.id })
+  const { error } = await supabase.from<Profile>(profile).update(user).match({ id: user.id })
+  console.log(error)
 }
 
 export const deleteProfile = async (user: Partial<Profile> & Pick<Profile, 'id'>) => {
