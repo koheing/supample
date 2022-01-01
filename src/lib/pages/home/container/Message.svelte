@@ -1,15 +1,16 @@
 <svelte:options immutable />
 
 <script lang="ts">
-  import type { UserId, Profile } from '../../../models/profile.model'
+  import type { UserId } from '../../../models/profile.model'
   import Avatar from '../../../views/atoms/Avatar.svelte'
   import type { Message } from '../../../models/message.model'
+  import { profileOf } from '../../../stores/profile.store'
 
   export let message: Message
-  export let profile: Profile
   export let myId: UserId
 
   $: mine = message.createdBy === myId
+  $: profile = profileOf(message.createdBy)
 </script>
 
 {#if mine}
@@ -19,11 +20,11 @@
         {message.text}
       </div>
     </div>
-    <div class="avatar"><Avatar url={profile.avatarUrl} alt={profile.username} /></div>
+    <div class="avatar"><Avatar url={$profile.avatarUrl} alt={$profile.username} /></div>
   </div>
 {:else}
   <div class="others message">
-    <div class="avatar"><Avatar url={profile.avatarUrl} alt={profile.username} /></div>
+    <div class="avatar"><Avatar url={$profile.avatarUrl} alt={$profile.username} /></div>
     <div class="bubble">
       <div class="text">{message.text}</div>
     </div>

@@ -33,6 +33,8 @@ export const profile = derived(store, (state) => state.mine)
 export const loading = derived(store, (state) => state.loading)
 export const loaded = derived(store, (state) => state.loaded)
 export const avatar = derived(store, (state) => state.mine?.avatarUrl ?? '')
+export const profileOf = (userId: UserId) =>
+  derived(store, (state) => state.all.find((it) => it.id === userId))
 
 export const create = async (profile: Partial<Profile> & Pick<Profile, 'id'>) => {
   store.update((state) => ({ ...state, loading: true, loaded: false }))

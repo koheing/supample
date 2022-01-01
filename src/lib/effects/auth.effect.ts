@@ -1,11 +1,13 @@
 import { userId } from '../stores/auth.store'
-import { create, subscribe } from '../stores/profile.store'
+import { create, subscribe as subscribeProfiles } from '../stores/profile.store'
+import { subscribe as subscribeMessages } from '../stores/message.store'
 
 userId.subscribe((id) => {
   if (!id) return
 
   void create({ id })
-  // void subscribe()
+  void subscribeProfiles()
+  void subscribeMessages()
 })
 
 export default {}

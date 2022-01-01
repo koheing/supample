@@ -7,5 +7,5 @@ export interface Message {
   text: string
   createdBy: UserId
   createdAt: string
-  updatedAt: string
+  updatedAt?: string
 }

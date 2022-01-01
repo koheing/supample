@@ -4,6 +4,11 @@ import { supabase } from './supabase'
 
 const messages = 'messages'
 
+export const createMessage = async (message: Omit<Message, 'createdAt'>) => {
+  const { data, error } = await supabase.from<Message>(messages).insert(message)
+  console.log(error, data)
+}
+
 export const selectAllMessages = async () => {
   const { data, error } = await supabase.from<Message>(messages).select()
   console.log(error)

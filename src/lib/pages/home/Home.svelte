@@ -5,13 +5,20 @@
   import TextInput, { ValidateEvent } from '../../views/atoms/TextInput.svelte'
   import Button from '../../views/atoms/Button.svelte'
   import { required } from '../../utils/validator'
-  import Message from './presentations/Message.svelte'
+  import Message from './container/Message.svelte'
+  import { messages } from '../../stores/message.store'
 
   let disabled = true
+  let message = ''
   $: avatar = $profile?.avatarUrl ?? ''
 
   function onValidate(e: ValidateEvent) {
     disabled = !e.detail.valid
+  }
+
+  function onClick() {
+    message = ''
+    disabled = true
   }
 </script>
 
@@ -19,29 +26,21 @@
   <Header {avatar} userId={$userId}>Dalack</Header>
 
   <div class="messages">
-    <Message
-      message={{
-        id: 123,
-        createdBy: 'user1',
-        text: 'トコメントコントコメントコメントコメントコメントコメントコメントコメントコメントコントコメントコメントコメントコメント',
-        createdAt: '',
-        updatedAt: '',
-      }}
-      profile={{ id: 'user1', username: 'test', avatarUrl: '' }}
-      myId={'user1'}
-    />
-    <Message
-      message={{ id: 1123, createdBy: 'user2', text: 'トコント', createdAt: '', updatedAt: '' }}
-      profile={{ id: 'user2', username: 'test', avatarUrl: '' }}
-      myId={'user1'}
-    />
+    {#each $messages as message (message.id)}
+      <Message {message} myId={$userId} />
+    {/each}
   </div>
 
   <div class="footer">
     <div class="text">
-      <TextInput showError={false} validators={[required]} on:validate={onValidate} />
+      <TextInput
+        bind:value={message}
+        showError={false}
+        validators={[required]}
+        on:validate={onValidate}
+      />
     </div>
-    <div class="button"><Button {disabled}>送信</Button></div>
+    <div class="button"><Button {disabled} on:click={onClick}>送信</Button></div>
   </div>
 </div>
 
