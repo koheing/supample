@@ -1,6 +1,6 @@
 <script lang="ts">
   import SignIn from './lib/pages/SignIn.svelte'
-  import Home from './lib/pages/Home.svelte'
+  import Home from './lib/pages/home/Home.svelte'
   import Router from 'svelte-spa-router'
   import Guard from './lib/views/presentations/Guard.svelte'
   import SignUp from './lib/pages/SignUp.svelte'

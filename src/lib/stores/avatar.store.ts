@@ -11,3 +11,10 @@ export const getAccesibleUrl = async (path: string) => {
   map.set(path, avatar)
   return avatar
 }
+
+export const refresh = async (path: string) => {
+  if (!map.has(path)) return
+
+  const avatar = await getSignedUrl(path)
+  map.set(path, avatar)
+}
