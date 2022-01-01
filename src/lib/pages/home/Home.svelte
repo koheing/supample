@@ -5,7 +5,7 @@
   import TextInput, { ValidateEvent } from '../../views/atoms/TextInput.svelte'
   import Button from '../../views/atoms/Button.svelte'
   import { required } from '../../utils/validator'
-  import Comment from './presentations/Comment.svelte'
+  import Message from './presentations/Message.svelte'
 
   let disabled = true
   $: avatar = $profile?.avatarUrl ?? ''
@@ -18,8 +18,8 @@
 <div class="layout">
   <Header {avatar} userId={$userId}>Dalack</Header>
 
-  <div class="comments">
-    <Comment
+  <div class="messages">
+    <Message
       message={{
         id: 123,
         createdBy: 'user1',
@@ -30,7 +30,7 @@
       profile={{ id: 'user1', username: 'test', avatarUrl: '' }}
       myId={'user1'}
     />
-    <Comment
+    <Message
       message={{ id: 1123, createdBy: 'user2', text: 'トコント', createdAt: '', updatedAt: '' }}
       profile={{ id: 'user2', username: 'test', avatarUrl: '' }}
       myId={'user1'}
@@ -54,7 +54,7 @@
     position: relative;
   }
 
-  .comments {
+  .messages {
     overflow-y: scroll;
     height: calc(100% - 4rem - 5.5rem);
   }
