@@ -11,6 +11,7 @@
 
   $: mine = message.createdBy === myId
   $: profile = profileOf(message.createdBy)
+  $: console.log(message, $profile, mine)
 </script>
 
 {#if mine}
@@ -20,11 +21,15 @@
         {message.text}
       </div>
     </div>
-    <div class="avatar"><Avatar url={$profile.avatarUrl} alt={$profile.username} /></div>
+    <div class="avatar">
+      <Avatar url={$profile.avatarUrl ?? ''} alt={$profile.username ?? ''} />
+    </div>
   </div>
 {:else}
   <div class="others message">
-    <div class="avatar"><Avatar url={$profile.avatarUrl} alt={$profile.username} /></div>
+    <div class="avatar">
+      <Avatar url={$profile.avatarUrl ?? ''} alt={$profile.username ?? ''} />
+    </div>
     <div class="bubble">
       <div class="text">{message.text}</div>
     </div>

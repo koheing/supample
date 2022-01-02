@@ -6,7 +6,7 @@
   import Button from '../../views/atoms/Button.svelte'
   import { required } from '../../utils/validator'
   import Message from './container/Message.svelte'
-  import { messages } from '../../stores/message.store'
+  import { messages, post } from '../../stores/message.store'
 
   let disabled = true
   let message = ''
@@ -16,7 +16,8 @@
     disabled = !e.detail.valid
   }
 
-  function onClick() {
+  async function onClick() {
+    await post($userId, message)
     message = ''
     disabled = true
   }
