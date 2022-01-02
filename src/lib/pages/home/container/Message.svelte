@@ -47,9 +47,7 @@
   .message {
     display: flex;
     flex-direction: row;
-    padding: 0 1.5rem;
-    padding-top: 1.5rem;
-    padding-bottom: 0.5rem;
+    padding: 1rem 1.5rem;
     width: 100%;
   }
 
