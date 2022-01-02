@@ -20,21 +20,23 @@
 {#if mine}
   <div class="mine message">
     <div class="bubble">
+      <div class="username">{$profile?.username ?? '名無し'}</div>
       <div class="text">
         <div class="timestamp">{timestamp}</div>
         {message.text}
       </div>
     </div>
     <div class="avatar">
-      <Avatar url={$profile?.avatarUrl ?? ''} alt={$profile?.username ?? ''} />
+      <Avatar url={$profile?.avatarUrl ?? ''} alt={$profile?.username ?? ''} scale={2.5} />
     </div>
   </div>
 {:else}
   <div class="others message">
     <div class="avatar">
-      <Avatar url={$profile?.avatarUrl ?? ''} alt={$profile?.username ?? ''} />
+      <Avatar url={$profile?.avatarUrl ?? ''} alt={$profile?.username ?? ''} scale={2.5} />
     </div>
     <div class="bubble">
+      <div class="username">{$profile?.username ?? '名無し'}</div>
       <div class="text">
         <div class="timestamp">{timestamp}</div>
         {message.text}
@@ -57,11 +59,18 @@
 
   .mine > .bubble {
     margin-right: 0;
-    max-width: 80%;
+    max-width: 60%;
   }
 
   .mine > .avatar {
     margin-left: 2rem;
+  }
+
+  .mine > .bubble > .username {
+    font-size: x-small;
+    text-align: right;
+    padding-right: 0.2rem;
+    padding-bottom: 0.1rem;
   }
 
   .mine > .bubble > .text > .timestamp {
@@ -94,14 +103,21 @@
     border-right-width: 0.5rem;
     margin-top: -0.5rem;
     border-left-color: #f0f0f0f0;
-    top: 1.25rem;
+    top: 1rem;
     right: -1.25rem;
     z-index: 1;
   }
 
   .others > .bubble {
     margin-left: 0;
-    max-width: 80%;
+    max-width: 60%;
+  }
+
+  .others > .bubble > .username {
+    font-size: x-small;
+    text-align: left;
+    padding-left: 0.2rem;
+    padding-bottom: 0.1rem;
   }
 
   .others > .bubble > .text > .timestamp {
@@ -134,7 +150,7 @@
     border-right-width: 0.5rem;
     margin-top: -0.5rem;
     border-left-color: #f0f0f0f0;
-    top: 1.25rem;
+    top: 1rem;
     left: -1.25rem;
     border-radius: 5%;
     transform: rotate(180deg);
