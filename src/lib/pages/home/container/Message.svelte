@@ -5,9 +5,14 @@
   import Avatar from '../../../views/atoms/Avatar.svelte'
   import type { Message } from '../../../models/message.model'
   import { profileOf } from '../../../stores/profile.store'
+  import { trash } from 'svelte-awesome/icons'
+  import IconButton from '../../../views/atoms/IconButton.svelte'
+  import { cancel } from '../../../stores/message.store'
 
   export let message: Message
   export let myId: UserId
+
+  let hidden = true
 
   $: mine = message.createdBy === myId
   $: profile = profileOf(message.createdBy)
@@ -15,25 +20,42 @@
     hour: '2-digit',
     minute: '2-digit',
   })
+
+  function onMouseEnter() {
+    hidden = false
+  }
+
+  function onMouseLeave() {
+    hidden = true
+  }
+
+  async function onClick() {
+    await cancel(message.id)
+  }
 </script>
 
 {#if mine}
   <div class="mine message">
     <div class="bubble">
       <div class="username">{$profile?.username ?? '名無し'}</div>
-      <div class="text">
+      <div class="text" on:mouseenter={onMouseEnter} on:mouseleave={onMouseLeave}>
         <div class="timestamp">{timestamp}</div>
+        {#if !hidden}
+          <div class="tool">
+            <div class="trash"><IconButton data={trash} scale={2.5} on:click={onClick} /></div>
+          </div>
+        {/if}
         {message.text}
       </div>
     </div>
     <div class="avatar">
-      <Avatar url={$profile?.avatarUrl ?? ''} alt={$profile?.username ?? ''} scale={2.5} />
+      <Avatar url={$profile?.avatarUrl ?? ''} alt={$profile?.username ?? ''} scale={3} />
     </div>
   </div>
 {:else}
   <div class="others message">
     <div class="avatar">
-      <Avatar url={$profile?.avatarUrl ?? ''} alt={$profile?.username ?? ''} scale={2.5} />
+      <Avatar url={$profile?.avatarUrl ?? ''} alt={$profile?.username ?? ''} scale={3} />
     </div>
     <div class="bubble">
       <div class="username">{$profile?.username ?? '名無し'}</div>
@@ -55,6 +77,7 @@
 
   .bubble {
     margin: auto;
+    position: relative;
   }
 
   .mine > .bubble {
@@ -89,6 +112,10 @@
     overflow-wrap: break-word;
   }
 
+  .mine > .bubble > .text:hover {
+    background-color: rgba(168, 168, 168, 0.8);
+  }
+
   .mine > .bubble > .text:after {
     border: solid transparent;
     content: '';
@@ -101,11 +128,32 @@
     border-bottom-width: 0.5rem;
     border-left-width: 1rem;
     border-right-width: 0.5rem;
-    margin-top: -0.5rem;
+    margin-top: -0.3rem;
     border-left-color: #f0f0f0f0;
     top: 1rem;
-    right: -1.25rem;
+    right: -1.45rem;
     z-index: 1;
+  }
+
+  .mine > .bubble > .text:hover:after {
+    border-left-color: rgba(168, 168, 168, 0.8);
+  }
+
+  .tool {
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    right: 50%;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+  }
+
+  .trash {
+    align-self: center;
+    color: var(--bg-color);
   }
 
   .others > .bubble {
@@ -148,10 +196,10 @@
     border-bottom-width: 0.5rem;
     border-left-width: 1rem;
     border-right-width: 0.5rem;
-    margin-top: -0.5rem;
+    margin-top: -0.3rem;
     border-left-color: #f0f0f0f0;
     top: 1rem;
-    left: -1.25rem;
+    left: -1.45rem;
     border-radius: 5%;
     transform: rotate(180deg);
     z-index: 1;

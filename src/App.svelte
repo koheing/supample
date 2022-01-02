@@ -2,7 +2,7 @@
   import SignIn from './lib/pages/SignIn.svelte'
   import Home from './lib/pages/home/Home.svelte'
   import Router from 'svelte-spa-router'
-  import Guard from './lib/views/presentations/Guard.svelte'
+  import Guard from './lib/views/container/Guard.svelte'
   import SignUp from './lib/pages/SignUp.svelte'
   import Profile from './lib/pages/Profile.svelte'
   import type { Path } from './lib/router'

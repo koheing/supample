@@ -52,7 +52,7 @@
   <div class="relative">
     <input {type} {value} on:input={onInput} on:blur={onBlur} {placeholder} on:focus={onFocus} />
     <div class="absolute">
-      <IconButton {data} scale={1.2} on:click={onClick} />
+      <IconButton {data} scale={1.2} on:click={onClick} hoverAnimation="shadow" />
     </div>
   </div>
   <div class="error">{validated.error}</div>

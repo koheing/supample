@@ -13,5 +13,5 @@
 {#if $watching}
   <slot />
 {:else}
-  <div>AAA</div>
+  <div>...</div>
 {/if}

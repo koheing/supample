@@ -1,5 +1,10 @@
-import type { Message } from '../models/message.model'
-import { createMessage, selectAllMessages, subscribeMessage } from '../services/message.service'
+import type { Message, MessageId } from '../models/message.model'
+import {
+  createMessage,
+  deleteMessage,
+  selectAllMessages,
+  subscribeMessage,
+} from '../services/message.service'
 import { derived, writable } from 'svelte/store'
 import type { Unsubscriber } from 'svelte/store'
 import type { UserId } from '../models/profile.model'
@@ -66,6 +71,14 @@ export const post = async (userId: UserId, text: string) => {
   store.update((state) => ({ ...state, loading: true, loaded: false }))
 
   await createMessage({ createdBy: userId, text })
+
+  store.update((state) => ({ ...state, loading: false, loaded: true }))
+}
+
+export const cancel = async (id: MessageId) => {
+  store.update((state) => ({ ...state, loading: true, loaded: false }))
+
+  await deleteMessage(id)
 
   store.update((state) => ({ ...state, loading: false, loaded: true }))
 }
