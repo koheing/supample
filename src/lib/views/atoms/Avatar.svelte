@@ -1,3 +1,5 @@
+<svelte:options immutable />
+
 <script lang="ts">
   import Icon from 'svelte-awesome'
   import { userCircle as user } from 'svelte-awesome/icons'

@@ -14,7 +14,8 @@ export const getAccesibleUrl = async (path: string) => {
   }
 
   const currentPath = map.get(path)
-  const { exp } = decode<{ exp: number }>(currentPath)
+  const token = currentPath.split('?token=')[1]
+  const { exp } = decode<{ exp: number }>(token)
 
   if (exp * 1000 - Date.now() > 0) return currentPath
 
