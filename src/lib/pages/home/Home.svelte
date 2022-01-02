@@ -5,7 +5,7 @@
   import TextInput, { ValidateEvent } from '../../views/atoms/TextInput.svelte'
   import Button from '../../views/atoms/Button.svelte'
   import { required } from '../../utils/validator'
-  import Message from './container/Message.svelte'
+  import Message from './containers/Message.svelte'
   import { messages, post } from '../../stores/message.store'
 
   let disabled = true
