@@ -11,27 +11,34 @@
 
   $: mine = message.createdBy === myId
   $: profile = profileOf(message.createdBy)
-  $: console.log(message, $profile, mine)
+  $: timestamp = new Date(message.createdAt).toLocaleString('ja-JP', {
+    hour: '2-digit',
+    minute: '2-digit',
+  })
 </script>
 
 {#if mine}
   <div class="mine message">
     <div class="bubble">
       <div class="text">
+        <div class="timestamp">{timestamp}</div>
         {message.text}
       </div>
     </div>
     <div class="avatar">
-      <Avatar url={$profile.avatarUrl ?? ''} alt={$profile.username ?? ''} />
+      <Avatar url={$profile?.avatarUrl ?? ''} alt={$profile?.username ?? ''} />
     </div>
   </div>
 {:else}
   <div class="others message">
     <div class="avatar">
-      <Avatar url={$profile.avatarUrl ?? ''} alt={$profile.username ?? ''} />
+      <Avatar url={$profile?.avatarUrl ?? ''} alt={$profile?.username ?? ''} />
     </div>
     <div class="bubble">
-      <div class="text">{message.text}</div>
+      <div class="text">
+        <div class="timestamp">{timestamp}</div>
+        {message.text}
+      </div>
     </div>
   </div>
 {/if}
@@ -40,7 +47,10 @@
   .message {
     display: flex;
     flex-direction: row;
-    padding: 1rem;
+    padding: 0 1.5rem;
+    padding-top: 1.5rem;
+    padding-bottom: 0.5rem;
+    width: 100%;
   }
 
   .bubble {
@@ -49,10 +59,19 @@
 
   .mine > .bubble {
     margin-right: 0;
+    max-width: 80%;
   }
 
   .mine > .avatar {
     margin-left: 2rem;
+  }
+
+  .mine > .bubble > .text > .timestamp {
+    font-size: x-small;
+    text-align: right;
+    position: absolute;
+    bottom: 0rem;
+    left: -2.5rem;
   }
 
   .mine > .bubble > .text {
@@ -60,6 +79,7 @@
     position: relative;
     background-color: #f0f0f0f0;
     border-radius: 0.75rem;
+    overflow-wrap: break-word;
   }
 
   .mine > .bubble > .text:after {
@@ -83,6 +103,15 @@
 
   .others > .bubble {
     margin-left: 0;
+    max-width: 80%;
+  }
+
+  .others > .bubble > .text > .timestamp {
+    font-size: x-small;
+    text-align: left;
+    position: absolute;
+    bottom: 0rem;
+    right: -2.5rem;
   }
 
   .others > .bubble > .text {
@@ -90,6 +119,7 @@
     position: relative;
     background-color: #f0f0f0f0;
     border-radius: 0.75rem;
+    overflow-wrap: break-word;
   }
 
   .others > .bubble > .text:before {
