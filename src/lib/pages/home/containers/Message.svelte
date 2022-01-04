@@ -1,17 +1,23 @@
 <svelte:options immutable />
 
+<script lang="ts" context="module">
+  export type DeleteEventDetail = { id: MessageId }
+  export type DeleteEvent = CustomEvent<DeleteEventDetail>
+</script>
+
 <script lang="ts">
   import type { UserId } from '../../../models/profile.model'
   import Avatar from '../../../views/atoms/Avatar.svelte'
-  import type { Message } from '../../../models/message.model'
+  import type { Message, MessageId } from '../../../models/message.model'
   import { profileOf } from '../../../stores/profile.store'
   import { trash } from 'svelte-awesome/icons'
   import IconButton from '../../../views/atoms/IconButton.svelte'
-  import { cancel } from '../../../stores/message.store'
+  import { createEventDispatcher } from 'svelte'
 
   export let message: Message
   export let myId: UserId
 
+  const dispatch = createEventDispatcher<{ delete: DeleteEventDetail }>()
   let hidden = true
 
   $: mine = message.createdBy === myId
@@ -29,8 +35,8 @@
     hidden = true
   }
 
-  async function onClick() {
-    await cancel(message.id)
+  function onClick() {
+    dispatch('delete', { id: message.id })
   }
 </script>
 

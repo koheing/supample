@@ -61,6 +61,11 @@
     />
   </div>
 
+  <div class="note">
+    <div>「OK」ボタンを押すと、入力したメールアドレスにメールが送信されます。</div>
+    <div>メール本文のリンクをクリックして登録を完了させてください。</div>
+  </div>
+
   <div class="button">
     <Button on:click={onClick} disabled={!canSignUp}>OK</Button>
   </div>
@@ -78,6 +83,11 @@
     display: flex;
     flex-direction: column;
     margin: 2.5rem 0;
+  }
+
+  .note {
+    font-size: x-small;
+    margin: 1rem 0;
   }
 
   .button {

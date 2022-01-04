@@ -39,7 +39,7 @@
 </script>
 
 <div class="input">
-  <input bind:value on:input={onInput} on:blur={onBlur} {placeholder} />
+  <input bind:value on:input={onInput} on:blur={onBlur} on:keypress {placeholder} />
   {#if showError}
     <div class="error">{validated.error}</div>
   {/if}
