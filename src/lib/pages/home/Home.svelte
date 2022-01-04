@@ -16,11 +16,8 @@
   let el: Element | null = null
   let reachedBottom = true
   $: avatar = $profile?.avatarUrl ?? ''
-  $: if ($messages.length && reachedBottom && el) {
-    console.log('HHH')
+  $: if ($messages.length && reachedBottom && el)
     tick().then(() => el.scrollTo({ top: el.scrollHeight, behavior: 'smooth' }))
-  }
-
   function onValidate(e: ValidateEvent) {
     disabled = !e.detail.valid
   }
