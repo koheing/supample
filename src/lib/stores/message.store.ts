@@ -82,3 +82,7 @@ export const cancel = async (id: MessageId) => {
 
   store.update((state) => ({ ...state, loading: false, loaded: true }))
 }
+
+export const refresh = () => {
+  store.set(init)
+}

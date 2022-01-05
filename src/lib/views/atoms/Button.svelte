@@ -1,17 +1,16 @@
 <script lang="ts">
   export let disabled = false
+  export let type: 'accent' | 'normal' = 'normal'
 </script>
 
-<button on:click {disabled}>
+<button on:click {disabled} class={type}>
   <span><slot /></span>
 </button>
 
 <style>
   button {
-    border: 0.1rem solid var(--ac-color);
     text-decoration: none;
     text-align: center;
-    color: var(--ac-color);
     border-radius: 1rem;
     padding: 0.5rem;
     width: 100%;
@@ -20,10 +19,8 @@
   button:hover {
     text-decoration: none;
     text-align: center;
-    color: var(--bg-color);
     border-radius: 1rem;
     padding: 0.5rem;
-    background-color: var(--ac-color);
     transition: 0.2s;
   }
 
@@ -47,5 +44,35 @@
     border: none;
     padding: 0.5rem;
     border-radius: 1rem;
+  }
+
+  .normal {
+    border: 0.1rem solid var(--ac-color);
+    color: var(--ac-color);
+  }
+
+  .normal:hover {
+    color: var(--bg-color);
+    background-color: var(--ac-color);
+  }
+
+  .normal:disabled {
+    background-color: #f0f0f0;
+    color: var(--fg-color);
+  }
+
+  .accent {
+    border: 0.1rem solid #c85c3e;
+    color: #c85c3e;
+  }
+
+  .accent:hover {
+    color: var(--bg-color);
+    background-color: #c85c3e;
+  }
+
+  .accent:disabled {
+    background-color: #f0f0f0;
+    color: var(--fg-color);
   }
 </style>

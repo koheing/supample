@@ -5,6 +5,7 @@ import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
   signUpWithEmailAndPassword,
+  signOut as so,
 } from '../services/auth.service'
 
 interface State {
@@ -43,6 +44,10 @@ export const signIn = async (email: string, password: string) => {
   store.update((state) => ({ ...state, loading: false, loaded: true }))
 }
 
+export const signOut = async () => {
+  await so()
+}
+
 let subscription: Subscription | null = null
 
 export const onAuthChanged = () => {
@@ -51,7 +56,15 @@ export const onAuthChanged = () => {
 
   const { data } = onAuthStateChanged((e, s) => {
     console.log(e)
-    store.update((state) => ({ ...state, user: s.user, watching: true }))
+    switch (e) {
+      case 'SIGNED_OUT': {
+        store.set({ ...init, watching: true })
+        break
+      }
+      default: {
+        store.update((state) => ({ ...state, user: s.user, watching: true }))
+      }
+    }
   })
 
   store.update((state) => ({ ...state, user: getSignedInUser(), watching: true }))

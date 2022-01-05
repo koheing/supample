@@ -21,6 +21,11 @@ export const signInWithEmailAndPassword = async (
   return user
 }
 
+export const signOut = async () => {
+  const { error } = await supabase.auth.signOut()
+  console.log(error)
+}
+
 export const onAuthStateChanged = (
   callback: Parameters<typeof supabase.auth.onAuthStateChange>[0]
 ) => {

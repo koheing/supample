@@ -2,7 +2,7 @@
 
 <script lang="ts">
   import Header from '../views/atoms/Header.svelte'
-  import { userId } from '../stores/auth.store'
+  import { signOut, userId } from '../stores/auth.store'
   import { params, push } from 'svelte-spa-router'
   import Avatar from '../views/atoms/Avatar.svelte'
   import Icon from 'svelte-awesome'
@@ -31,9 +31,14 @@
     valid = detail.valid
   }
 
-  async function onClick() {
+  async function onUpdateClick() {
     !!username && username !== '' && (await updateUserName(username))
     await push('/')
+  }
+
+  async function onSignOutClick() {
+    await signOut()
+    await push('/signin')
   }
 </script>
 
@@ -68,7 +73,11 @@
         on:validate={onValidate}
       />
 
-      <Button on:click={onClick} disabled={!valid}>登録</Button>
+      <Button on:click={onUpdateClick} disabled={!valid}>更新</Button>
+    </div>
+
+    <div class="signout">
+      <Button on:click={onSignOutClick} type="accent">サインアウト</Button>
     </div>
   </Card>
 </div>
@@ -98,5 +107,10 @@
   .edit {
     color: black;
     cursor: pointer;
+  }
+
+  .signout {
+    width: 60%;
+    padding: 1rem;
   }
 </style>
